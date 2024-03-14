@@ -177,9 +177,9 @@ onUiLoaded(async() => {
 
         if (!mainTabId) return;
 
-        const mainTab = gradioApp().querySelector(mainTabId);
+        const mainTab = $(mainTabId);
         const img = mainTab.querySelector("img");
-        const imageARPreview = gradioApp().querySelector("#imageARPreview");
+        const imageARPreview = $("#imageARPreview");
 
         if (!img || !imageARPreview) return;
 
@@ -256,7 +256,7 @@ onUiLoaded(async() => {
     const elements = Object.fromEntries(
         Object.keys(elementIDs).map(id => [
             id,
-            gradioApp().querySelector(elementIDs[id])
+            $(elementIDs[id])
         ])
     );
     const elemData = {};
@@ -265,8 +265,8 @@ onUiLoaded(async() => {
     const rangeInputs = elements.rangeGroup ?
         Array.from(elements.rangeGroup.querySelectorAll("input")) :
         [
-            gradioApp().querySelector("#img2img_width input[type='range']"),
-            gradioApp().querySelector("#img2img_height input[type='range']")
+            $("#img2img_width input[type='range']"),
+            $("#img2img_height input[type='range']")
         ];
 
     for (const input of rangeInputs) {
@@ -274,7 +274,7 @@ onUiLoaded(async() => {
     }
 
     function applyZoomAndPan(elemId, isExtension = true) {
-        const targetElement = gradioApp().querySelector(elemId);
+        const targetElement = $(elemId);
 
         if (!targetElement) {
             console.log("Element not found");
@@ -394,7 +394,7 @@ onUiLoaded(async() => {
             fixCanvas();
             targetElement.style.transform = `scale(${elemData[elemId].zoomLevel}) translate(${elemData[elemId].panX}px, ${elemData[elemId].panY}px)`;
 
-            const canvas = gradioApp().querySelector(
+            const canvas = $(
                 `${elemId} canvas[key="interface"]`
             );
 
@@ -455,10 +455,10 @@ onUiLoaded(async() => {
             percentage = 5
         ) {
             const input =
-                gradioApp().querySelector(
+                $(
                     `${elemId} input[aria-label='Brush radius']`
                 ) ||
-                gradioApp().querySelector(
+                $(
                     `${elemId} button[aria-label="Use brush"]`
                 );
 
@@ -478,7 +478,7 @@ onUiLoaded(async() => {
         }
 
         // Reset zoom when uploading a new image
-        const fileInput = gradioApp().querySelector(
+        const fileInput = $(
             `${elemId} input[type="file"][accept="image/*"].svelte-116rqfv`
         );
         fileInput.addEventListener("click", resetZoom);
@@ -600,7 +600,7 @@ onUiLoaded(async() => {
 
         // Fullscreen mode
         function fitToScreen() {
-            const canvas = gradioApp().querySelector(
+            const canvas = $(
                 `${elemId} canvas[key="interface"]`
             );
 

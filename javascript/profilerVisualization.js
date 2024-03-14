@@ -1,42 +1,36 @@
 
 function createRow(table, cellName, items) {
-    var tr = document.createElement('tr');
-    var res = [];
+    var tr = createElement('tr', '', table)
+    var res = []
 
     items.forEach(function(x, i) {
         if (x === undefined) {
-            res.push(null);
-            return;
+            res.push(null)
+            return
         }
 
-        var td = document.createElement(cellName);
-        td.textContent = x;
-        tr.appendChild(td);
+        var td = createElement(cellName, '', {textContent: x}, tr)
         res.push(td);
 
         var colspan = 1;
         for (var n = i + 1; n < items.length; n++) {
             if (items[n] !== undefined) {
-                break;
+                break
             }
-
-            colspan += 1;
+            colspan++
         }
 
         if (colspan > 1) {
-            td.colSpan = colspan;
+            td.colSpan = colspan
         }
-    });
-
-    table.appendChild(tr);
-
-    return res;
+    })
+    
+    return res
 }
 
 function showProfile(path, cutoff = 0.05) {
     requestGet(path, {}, function(data) {
-        var table = document.createElement('table');
-        table.className = 'popup-table';
+        var table = createElement('table', 'popup-table')
 
         data.records['total'] = data.total;
         var keys = Object.keys(data.records).sort(function(a, b) {

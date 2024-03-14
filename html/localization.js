@@ -112,7 +112,7 @@ function localizeWholePage() {
 
     function elem(comp) {
         var elem_id = comp.props.elem_id ? comp.props.elem_id : "component-" + comp.id;
-        return gradioApp().getElementById(elem_id);
+        return _(elem_id);
     }
 
     for (var comp of window.gradio_config.components) {

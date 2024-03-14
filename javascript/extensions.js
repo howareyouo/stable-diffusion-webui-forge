@@ -2,7 +2,7 @@
 function extensions_apply(_disabled_list, _update_list, disable_all) {
     var disable = [];
     var update = [];
-    const extensions_input = gradioApp().querySelectorAll('#extensions input[type="checkbox"]');
+    const extensions_input = $$('#extensions input[type="checkbox"]');
     if (extensions_input.length == 0) {
         throw Error("Extensions page not yet loaded.");
     }
@@ -24,19 +24,19 @@ function extensions_apply(_disabled_list, _update_list, disable_all) {
 function extensions_check() {
     var disable = [];
 
-    gradioApp().querySelectorAll('#extensions input[type="checkbox"]').forEach(function(x) {
+    $$('#extensions input[type="checkbox"]').forEach(function(x) {
         if (x.name.startsWith("enable_") && !x.checked) {
             disable.push(x.name.substring(7));
         }
     });
 
-    gradioApp().querySelectorAll('#extensions .extension_status').forEach(function(x) {
+    $$('#extensions .extension_status').forEach(function(x) {
         x.innerHTML = "Loading...";
     });
 
 
     var id = randomId();
-    requestProgress(id, gradioApp().getElementById('extensions_installed_html'), null, function() {
+    requestProgress(id, _('extensions_installed_html'), null, function() {
 
     });
 
@@ -47,11 +47,11 @@ function install_extension_from_index(button, url) {
     button.disabled = "disabled";
     button.value = "Installing...";
 
-    var textarea = gradioApp().querySelector('#extension_to_install textarea');
+    var textarea = $('#extension_to_install textarea');
     textarea.value = url;
     updateInput(textarea);
 
-    gradioApp().querySelector('#install_extension_button').click();
+    $('#install_extension_button').click();
 }
 
 function config_state_confirm_restore(_, config_state_name, config_restore_type) {
@@ -69,7 +69,7 @@ function config_state_confirm_restore(_, config_state_name, config_restore_type)
     let confirmed = confirm("Are you sure you want to restore from this state?\nThis will reset " + restored + ".");
     if (confirmed) {
         restart_reload();
-        gradioApp().querySelectorAll('#extensions .extension_status').forEach(function(x) {
+        $$('#extensions .extension_status').forEach(function(x) {
             x.innerHTML = "Loading...";
         });
     }
@@ -77,19 +77,19 @@ function config_state_confirm_restore(_, config_state_name, config_restore_type)
 }
 
 function toggle_all_extensions(event) {
-    gradioApp().querySelectorAll('#extensions .extension_toggle').forEach(function(checkbox_el) {
+    $$('#extensions .extension_toggle').forEach(function(checkbox_el) {
         checkbox_el.checked = event.target.checked;
     });
 }
 
 function toggle_extension() {
     let all_extensions_toggled = true;
-    for (const checkbox_el of gradioApp().querySelectorAll('#extensions .extension_toggle')) {
+    for (const checkbox_el of $$('#extensions .extension_toggle')) {
         if (!checkbox_el.checked) {
             all_extensions_toggled = false;
             break;
         }
     }
 
-    gradioApp().querySelector('#extensions .all_extensions_toggle').checked = all_extensions_toggled;
+    $('#extensions .all_extensions_toggle').checked = all_extensions_toggled;
 }

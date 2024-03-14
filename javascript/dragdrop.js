@@ -62,7 +62,7 @@ function dragDropTargetIsPrompt(target) {
     return false;
 }
 
-window.document.addEventListener('dragover', e => {
+window.document.on('dragover', e => {
     const target = e.composedPath()[0];
     if (!eventHasFiles(e)) return;
 
@@ -74,7 +74,7 @@ window.document.addEventListener('dragover', e => {
     e.dataTransfer.dropEffect = 'copy';
 });
 
-window.document.addEventListener('drop', e => {
+window.document.on('drop', e => {
     const target = e.composedPath()[0];
     if (!eventHasFiles(e)) return;
 
@@ -84,7 +84,7 @@ window.document.addEventListener('drop', e => {
 
         let prompt_target = get_tab_index('tabs') == 1 ? "img2img_prompt_image" : "txt2img_prompt_image";
 
-        const imgParent = gradioApp().getElementById(prompt_target);
+        const imgParent = _(prompt_target);
         const files = e.dataTransfer.files;
         const fileInput = imgParent.querySelector('input[type="file"]');
         if (fileInput) {
@@ -103,13 +103,13 @@ window.document.addEventListener('drop', e => {
     }
 });
 
-window.addEventListener('paste', e => {
+window.on('paste', e => {
     const files = e.clipboardData.files;
     if (!isValidImageList(files)) {
         return;
     }
 
-    const visibleImageFields = [...gradioApp().querySelectorAll('[data-testid="image"]')]
+    const visibleImageFields = [...$$('[data-testid="image"]')]
         .filter(el => uiElementIsVisible(el))
         .sort((a, b) => uiElementInSight(b) - uiElementInSight(a));
 

@@ -26,8 +26,8 @@ function checkBrackets(textArea, counterElt) {
 }
 
 function setupBracketChecking(id_prompt, id_counter) {
-    var textarea = gradioApp().querySelector("#" + id_prompt + " > label > textarea");
-    var counter = gradioApp().getElementById(id_counter);
+    var textarea = $("#" + id_prompt + " > label > textarea");
+    var counter = _(id_counter);
 
     if (textarea && counter) {
         textarea.addEventListener("input", () => checkBrackets(textarea, counter));

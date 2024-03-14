@@ -140,7 +140,7 @@ function updateTooltip(element) {
     }
 
     if (tooltip) {
-        element.title = tooltip;
+        element.title = tooltip
     }
 }
 
@@ -194,7 +194,7 @@ onUiUpdate(function(mutationRecords) {
 onUiLoaded(function() {
     for (var comp of window.gradio_config.components) {
         if (comp.props.webui_tooltip && comp.props.elem_id) {
-            var elem = gradioApp().getElementById(comp.props.elem_id);
+            var elem = _(comp.props.elem_id);
             if (elem) {
                 elem.title = comp.props.webui_tooltip;
             }

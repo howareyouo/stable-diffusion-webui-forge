@@ -20,7 +20,7 @@ class UpscalerDAT(Upscaler):
             self.scalers.append(scaler_data)
 
         for model in get_dat_models(self):
-            if model.name in opts.dat_enabled_models:
+            if model.name in opts.dat_enabled_models and model not in self.scalers:
                 self.scalers.append(model)
 
     def do_upscale(self, img, path):
@@ -61,19 +61,19 @@ class UpscalerDAT(Upscaler):
 def get_dat_models(scaler):
     return [
         UpscalerData(
-            name="DAT x2",
+            name="DAT_x2",
             path="https://github.com/n0kovo/dat_upscaler_models/raw/main/DAT/DAT_x2.pth",
             scale=2,
             upscaler=scaler,
         ),
         UpscalerData(
-            name="DAT x3",
+            name="DAT_x3",
             path="https://github.com/n0kovo/dat_upscaler_models/raw/main/DAT/DAT_x3.pth",
             scale=3,
             upscaler=scaler,
         ),
         UpscalerData(
-            name="DAT x4",
+            name="DAT_x4",
             path="https://github.com/n0kovo/dat_upscaler_models/raw/main/DAT/DAT_x4.pth",
             scale=4,
             upscaler=scaler,

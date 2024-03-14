@@ -9,7 +9,7 @@ import psutil
 import re
 
 import launch
-from modules import paths_internal, timer, shared, extensions, errors
+from modules import paths_internal, timer, shared, extensions, errors, util
 
 checksum_token = "DontStealMyGamePlz__WINNERS_DONT_USE_DRUGS__DONT_COPY_THAT_FLOPPY"
 environment_whitelist = {
@@ -36,13 +36,26 @@ environment_whitelist = {
     "IGNORE_CMD_ARGS_ERRORS",
 }
 
+# get relative path
+def shorten(filepath:str) -> str:
+    return util.yy(os.path.relpath(filepath, "models"))
 
-def pretty_bytes(num, suffix="B"):
+def hr_size(filepath:str) -> str:
+    stat = os.stat(filepath)
+    return pretty_bytes(stat.st_size)
+
+def _pretty_bytes(num, suffix="B"):
     for unit in ["", "K", "M", "G", "T", "P", "E", "Z", "Y"]:
         if abs(num) < 1024 or unit == 'Y':
-            return f"{num:.0f}{unit}{suffix}"
+            return f"{num:.2f}{unit}{suffix}"
         num /= 1024
 
+def pretty_bytes(size, decimal_places=2):
+    for unit in ['B', 'KB', 'MB', 'GB', 'TB', 'PB']:
+        if size < 1024.0 or unit == 'PB':
+            break
+        size /= 1024.0
+    return f"{size:.{decimal_places}f} {unit}"
 
 def get():
     res = get_dict()

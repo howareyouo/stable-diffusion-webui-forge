@@ -11,7 +11,7 @@ var contextMenuInit = function() {
         let posx = event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
         let posy = event.clientY + document.body.scrollTop + document.documentElement.scrollTop;
 
-        let oldMenu = gradioApp().querySelector('#context-menu');
+        let oldMenu = $('#context-menu');
         if (oldMenu) {
             oldMenu.remove();
         }
@@ -25,8 +25,6 @@ var contextMenuInit = function() {
         contextMenu.style.fontFamily = baseStyle.fontFamily;
         contextMenu.style.top = posy + 'px';
         contextMenu.style.left = posx + 'px';
-
-
 
         const contextMenuList = document.createElement('ul');
         contextMenuList.className = 'context-menu-items';
@@ -102,13 +100,13 @@ var contextMenuInit = function() {
                 return;
             }
 
-            let oldMenu = gradioApp().querySelector('#context-menu');
+            let oldMenu = $('#context-menu');
             if (oldMenu) {
                 oldMenu.remove();
             }
         });
         gradioApp().addEventListener("contextmenu", function(e) {
-            let oldMenu = gradioApp().querySelector('#context-menu');
+            let oldMenu = $('#context-menu');
             if (oldMenu) {
                 oldMenu.remove();
             }
@@ -134,8 +132,8 @@ var addContextMenuEventListener = initResponse[2];
 (function() {
     //Start example Context Menu Items
     let generateOnRepeat = function(genbuttonid, interruptbuttonid) {
-        let genbutton = gradioApp().querySelector(genbuttonid);
-        let interruptbutton = gradioApp().querySelector(interruptbuttonid);
+        let genbutton = $(genbuttonid);
+        let interruptbutton = $(interruptbuttonid);
         if (!interruptbutton.offsetParent) {
             genbutton.click();
         }

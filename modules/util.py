@@ -1,9 +1,11 @@
 import os
 import re
 
-from modules import shared
+from modules import shared, sysinfo
 from modules.paths_internal import script_path, cwd
+from colorama import Fore, Style, init
 
+init(True)
 
 def natural_sort_key(s, regex=re.compile('([0-9]+)')):
     return [int(text) if text.isdigit() else text.lower() for text in regex.split(s)]
@@ -13,9 +15,38 @@ def listfiles(dirname):
     filenames = [os.path.join(dirname, x) for x in sorted(os.listdir(dirname), key=natural_sort_key) if not x.startswith(".")]
     return [file for file in filenames if os.path.isfile(file)]
 
+def r(text):
+    return Style.DIM + Fore.RED + text + + Fore.RESET
+
+def rr(text):
+    return Fore.RED + text + + Fore.RESET
+
+def rrr(text):
+    return Fore.LIGHTRED_EX + text + + Fore.RESET
+
+def g(text):
+    return Style.DIM + Fore.GREEN + text + + Fore.RESET
+
+def gg(text):
+    return Fore.GREEN + text + Fore.RESET
+
+def ggg(text):
+    return Fore.LIGHTGREEN_EX + text + Fore.RESET
+
+def y(text):
+    return Style.DIM + Fore.YELLOW + text + Fore.RESET + Style.RESET_ALL
+
+def yy(text):
+    return Fore.YELLOW + text + Fore.RESET
+
+def yyy(text):
+    return Fore.LIGHTYELLOW_EX + text + Fore.RESET
 
 def html_path(filename):
     return os.path.join(script_path, "html", filename)
+
+def shortern(filename):
+    return yy(os.path.relpath(filename, "models"))
 
 
 def html(filename):
@@ -77,7 +108,7 @@ class MassFileListerCachedDir:
         self.dirname = dirname
 
         stats = ((x.name, x.stat(follow_symlinks=False)) for x in os.scandir(self.dirname))
-        files = [(n, s.st_mtime, s.st_ctime) for n, s in stats]
+        files = [(n, s.st_mtime, s.st_ctime, s.st_size) for n, s in stats]
         self.files = {x[0].lower(): x for x in files}
         self.files_cased = {x[0]: x for x in files}
 
@@ -113,7 +144,7 @@ class MassFileLister:
 
         try:
             os_stats = os.stat(path, follow_symlinks=False)
-            return filename, os_stats.st_mtime, os_stats.st_ctime
+            return filename, os_stats.st_mtime, os_stats.st_ctime, os_stats.st_size
         except Exception:
             return None
 
@@ -131,7 +162,7 @@ class MassFileLister:
         """
 
         stats = self.find(path)
-        return (0, 0) if stats is None else stats[1:3]
+        return (0, 0, 0) if stats is None else stats[1:4]
 
     def reset(self):
         """Clear the cache of all directories."""

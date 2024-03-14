@@ -21,12 +21,12 @@ function update_img2img_tokens(...args) {
 }
 
 function update_token_counter(button_id) {
-    promptTokenCountUpdateFunctions[button_id]?.();
+    promptTokenCountUpdateFunctions[button_id]?.()
 }
 
 
 function recalculatePromptTokens(name) {
-    promptTokenCountUpdateFunctions[name]?.();
+    promptTokenCountUpdateFunctions[name]?.()
 }
 
 function recalculate_prompts_txt2img() {
@@ -44,20 +44,20 @@ function recalculate_prompts_img2img() {
 }
 
 function setupTokenCounting(id, id_counter, id_button) {
-    var prompt = gradioApp().getElementById(id);
-    var counter = gradioApp().getElementById(id_counter);
-    var textarea = gradioApp().querySelector(`#${id} > label > textarea`);
+    var prompt = _(id);
+    var counter = _(id_counter);
+    var textarea = $(`#${id} > label > textarea`);
 
     if (counter.parentElement == prompt.parentElement) {
         return;
     }
 
-    prompt.parentElement.insertBefore(counter, prompt);
+    prompt.before(counter)
     prompt.parentElement.style.position = "relative";
 
     var func = onEdit(id, textarea, 800, function() {
         if (counter.classList.contains("token-counter-visible")) {
-            gradioApp().getElementById(id_button)?.click();
+            _(id_button)?.click();
         }
     });
     promptTokenCountUpdateFunctions[id] = func;
@@ -65,7 +65,7 @@ function setupTokenCounting(id, id_counter, id_button) {
 }
 
 function toggleTokenCountingVisibility(id, id_counter, id_button) {
-    var counter = gradioApp().getElementById(id_counter);
+    var counter = _(id_counter);
 
     counter.style.display = opts.disable_token_counters ? "none" : "block";
     counter.classList.toggle("token-counter-visible", !opts.disable_token_counters);

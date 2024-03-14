@@ -160,7 +160,8 @@ class EmbeddingDatabase:
 
         if ext in ['.PNG', '.WEBP', '.JXL', '.AVIF']:
             _, second_ext = os.path.splitext(name)
-            if second_ext.upper() == '.PREVIEW':
+            # if second_ext.upper() == '.PREVIEW':
+            if second_ext.upper() != '.EMB':
                 return
 
             embed_image = Image.open(path)

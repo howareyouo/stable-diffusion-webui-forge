@@ -3,7 +3,7 @@
  * @see https://github.com/gradio-app/gradio/issues/1721
  */
 function imageMaskResize() {
-    const canvases = gradioApp().querySelectorAll('#img2maskimg .touch-none canvas');
+    const canvases = $$('#img2maskimg .touch-none canvas');
     if (!canvases.length) {
         window.removeEventListener('resize', imageMaskResize);
         return;
