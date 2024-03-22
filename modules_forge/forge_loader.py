@@ -119,8 +119,7 @@ def load_checkpoint_guess_config(sd, output_vae=True, output_clip=True, output_c
             load_model_weights(w, sd)
 
     left_over = sd.keys()
-    if len(left_over) > 0:
-        print("left over keys:", left_over)
+    # if len(left_over) > 0: print("left over keys:", left_over)
 
     if output_model:
         model_patcher = UnetPatcher(model, load_device=load_device, offload_device=model_management.unet_offload_device(), current_device=inital_load_device)

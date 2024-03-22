@@ -275,13 +275,13 @@ class AttnBlock(nn.Module):
                                         padding=0)
 
         if model_management.xformers_enabled_vae():
-            print("Using xformers attention in VAE")
+            # print("Using xformers attention in VAE")
             self.optimized_attention = xformers_attention
         elif model_management.pytorch_attention_enabled():
-            print("Using pytorch attention in VAE")
+            # print("Using pytorch attention in VAE")
             self.optimized_attention = pytorch_attention
         else:
-            print("Using split attention in VAE")
+            # print("Using split attention in VAE")
             self.optimized_attention = normal_attention
 
     def forward(self, x):
@@ -569,8 +569,7 @@ class Decoder(nn.Module):
         block_in = ch*ch_mult[self.num_resolutions-1]
         curr_res = resolution // 2**(self.num_resolutions-1)
         self.z_shape = (1,z_channels,curr_res,curr_res)
-        print("Working with z of shape {} = {} dimensions.".format(
-            self.z_shape, np.prod(self.z_shape)))
+        # print("Working with z of shape {} = {} dimensions.".format(self.z_shape, np.prod(self.z_shape)))
 
         # z to block_in
         self.conv_in = ops.Conv2d(z_channels,

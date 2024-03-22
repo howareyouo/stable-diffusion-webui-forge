@@ -333,7 +333,7 @@ class LoadedModel:
 
         if not disable_async_load:
             flag = 'ASYNC' if stream.using_stream else 'SYNC'
-            print(f"[Memory Management] Requested {flag} Preserved Memory (MB) = ", async_kept_memory / (1024 * 1024))
+            # print(f"[Memory Management] Requested {flag} Preserved Memory (MB) = ", async_kept_memory / (1024 * 1024))
             real_async_memory = 0
             mem_counter = 0
             for m in self.real_model.modules():
@@ -352,9 +352,9 @@ class LoadedModel:
                 elif hasattr(m, "weight"):
                     m.to(self.device)
                     mem_counter += module_size(m)
-                    print(f"[Memory Management] {flag} Loader Disabled for ", m)
-            print(f"[Memory Management] Parameters Loaded to {flag} Stream (MB) = ", real_async_memory / (1024 * 1024))
-            print(f"[Memory Management] Parameters Loaded to GPU (MB) = ", mem_counter / (1024 * 1024))
+                    # print(f"[Memory Management] {flag} Loader Disabled for ", m)
+            # print(f"[Memory Management] Parameters Loaded to {flag} Stream (MB) = ", real_async_memory / (1024 * 1024))
+            # print(f"[Memory Management] Parameters Loaded to GPU (MB) = ", mem_counter / (1024 * 1024))
 
             self.model_accelerated = True
 
@@ -435,8 +435,7 @@ def load_models_gpu(models, memory_required=0):
             current_loaded_models.insert(0, current_loaded_models.pop(index))
             models_already_loaded.append(loaded_model)
         else:
-            if hasattr(x, "model"):
-                print(f"To load target model {x.model.__class__.__name__}")
+            # if hasattr(x, "model"): print(f"To load target model {x.model.__class__.__name__}")
             models_to_load.append(loaded_model)
 
     if len(models_to_load) == 0:
@@ -451,7 +450,7 @@ def load_models_gpu(models, memory_required=0):
 
         return
 
-    print(f"Begin to load {len(models_to_load)} model{'s' if len(models_to_load) > 1 else ''}")
+    # print(f"Begin to load {len(models_to_load)} model{'s' if len(models_to_load) > 1 else ''}")
 
     total_memory_required = {}
     for loaded_model in models_to_load:
@@ -478,10 +477,10 @@ def load_models_gpu(models, memory_required=0):
             minimal_inference_memory = minimum_inference_memory()
             estimated_remaining_memory = current_free_mem - model_memory - minimal_inference_memory
 
-            print("[Memory Management] Current Free GPU Memory (MB) = ", current_free_mem / (1024 * 1024))
-            print("[Memory Management] Model Memory (MB) = ", model_memory / (1024 * 1024))
-            print("[Memory Management] Minimal Inference Memory (MB) = ", minimal_inference_memory / (1024 * 1024))
-            print("[Memory Management] Estimated Remaining GPU Memory (MB) = ", estimated_remaining_memory / (1024 * 1024))
+            # print("[Memory Management] Current Free GPU Memory (MB) = ", current_free_mem / (1024 * 1024))
+            # print("[Memory Management] Model Memory (MB) = ", model_memory / (1024 * 1024))
+            # print("[Memory Management] Minimal Inference Memory (MB) = ", minimal_inference_memory / (1024 * 1024))
+            # print("[Memory Management] Estimated Remaining GPU Memory (MB) = ", estimated_remaining_memory / (1024 * 1024))
 
             if estimated_remaining_memory < 0:
                 vram_set_state = VRAMState.LOW_VRAM

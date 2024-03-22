@@ -11,14 +11,12 @@ gradio_hf_hub_themes = [
     "gradio/base",
     "Medguy/base2",
     "abidlabs/test-yellow",
+    "abidlabs/pakistan",
+    "abidlabs/Lime",
     "Ama434/neutral-barlow",
-    "Ama434/def_barlow",
     "victorrauwcc/RCC",
     "reilnuud/polite",
-    "abidlabs/Lime",
     "aliabid94/new-theme",
-    "remilia/Ghostly",
-    "step-3-profit/Midnight-Deep",
 ]
 
 
